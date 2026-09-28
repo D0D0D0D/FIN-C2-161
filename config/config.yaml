@@ -1,0 +1,33 @@
+# Runtime parameters — loaded by the HTTP adapter and passed to the graph.
+max_retry: 3
+timeout_seconds: 60
+
+# HITL is not adopted — see docs/01_proposal.md "HITL Gate" and docs/02_design.md D-2.
+memory_enabled: false
+hitl:
+  enabled: false
+
+# Partition key resolved by the entry adapter from the authenticated caller.
+# unit_id is a narrowing domain field, not a partition key.
+scope_keys: ["institution_id"]
+
+# Stage 2 — similar-perspective recall
+recall_top_k: 5
+
+# Stage 1 — customer-customizable evidence requirements.
+required_evidence_by_alert_type:
+  cash: ["transaction_record", "kyc_document"]
+  sanctions: ["transaction_record", "inquiry_response"]
+  transaction_monitoring: ["transaction_record"]
+  kyc: ["kyc_document"]
+
+# null disables date/freshness checks.
+evidence_max_age_days: null
+payload_ttl_seconds: 900
+max_free_text_chars: 12000
+require_evidence_link_for_all_claims: true
+
+# Mode-specific authorization; missing/empty entries fail closed.
+roles:
+  ingest: ["aml_data_steward"]
+  feedback: ["aml_reviewer", "aml_supervisor"]

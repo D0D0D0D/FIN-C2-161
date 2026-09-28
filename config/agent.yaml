@@ -1,0 +1,28 @@
+# Agent Manifest — AgentRegistry entry point
+# AgentRegistry reads every key below at ROOT level; do not nest under agent:.
+id: "FIN-C2-161"
+name: "AMLDispositionMemoAgent"
+namespace: "fin"
+version: "1.0.0"
+enabled: true
+category: "Cat 2"
+# Static generation contract (review-criteria: deterministic | llm・未宣言は deterministic 既定).
+# src/api/server.py の既定 config は BaseLLM を構築せず、LLM は任意注入シームのみ。
+generation_mode: "llm"  # deterministic | llm
+# 実 LLM 1回転チェック（work/scripts/mrb_live_llm_check.py）で config["llm"] シーム経由の
+# 呼び出しを実測したうえで llm と宣言している。
+industry: "FIN"
+
+# Opaque compatibility metadata. Runtime tuning lives in config/config.yaml.
+base_type: "AgentBaseGraph"
+
+# Entry point — single dotted import path (module.Class).
+class: "src.graph.graph.AMLDispositionMemoAgent"
+
+# Security
+required_trust_level: "VERIFIED_EXTERNAL"
+
+requires:
+  extras: []
+  # Services are injected; src/ resolves no secret directly.
+  secrets: []

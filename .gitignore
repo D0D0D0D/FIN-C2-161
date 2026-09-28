@@ -1,0 +1,20 @@
+# CoE-distributed reference files — local use only (criterion #14)
+CLAUDE.md
+DEV_CREDENTIAL_PROVISIONING.md
+security_rules/
+MANIFEST.md
+STG_RUNBOOK.md
+ci_stubs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+# CI 生成の advisory 成果物
+reuse_telemetry/
